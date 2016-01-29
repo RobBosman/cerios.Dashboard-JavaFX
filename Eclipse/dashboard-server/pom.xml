@@ -1,0 +1,171 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>nl.valori</groupId>
+		<artifactId>valori-root</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<groupId>nl.valori.dashboard</groupId>
+	<artifactId>dashboard-server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>Dashboard Server</name>
+	<packaging>war</packaging>
+	<properties>
+		<wtpContextName>dashboard/server</wtpContextName>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jnlp</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- JNLP generation -->
+					<jnlp>
+						<outputFile>dashboard.jnlp</outputFile>
+						<mainClass>nl.valori.dashboard.Main</mainClass>
+					</jnlp>
+					<!-- SIGNING -->
+<!--
+					<sign>
+						<keystore>${project.basedir}/src/jnlp/RP070000000010171.p12</keystore>
+						<storepass>XhyD@Bm78K</storepass>
+						<storetype>pkcs12</storetype>
+						<alias>{becd17eb-34d3-4130-8b06-cc30611232e1}</alias>
+						<verify>false</verify>
+					</sign>
+-->
+					<!-- KEYSTORE MANGEMENT -->
+<!--
+					<keystore>
+						<delete>true</delete>
+						<gen>false</gen>
+					</keystore>
+					<verbose>false</verbose>
+					<verifyjar>false</verifyjar>
+-->
+				</configuration>
+			</plugin>
+
+			<!-- Automatically remove all signed jar files before the jnlp plugin runs.
+			     This is a workaround for a problem in the JNLP plugin. -->
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<delete dir="target/jnlp" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+<!--
+			<plugin>
+				<groupId>org.codehaus.mojo.webstart</groupId>
+				<artifactId>webstart-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>jnlp-download-servlet</goal>
+						</goals>
+					</execution>
+				</executions>      
+				<configuration>
+					<outputDirectoryName>webstart</outputDirectoryName>          
+					<jnlpFiles>
+						<jnlpFile>
+							<templateFilename>template.vm</templateFilename>
+							<outputFilename>dashboard.jnlp</outputFilename>
+							<jarResources>
+								<jarResource>
+									<groupId>nl.valori.dashboard</groupId>
+									<artifactId>dashboard-persistency</artifactId>
+									<version>0.0.1-SNAPSHOT</version>
+									<mainClass>nl.valori.dashboard.Main</mainClass>
+								</jarResource>
+							</jarResources>
+						</jnlpFile>
+					</jnlpFiles>
+					<sign>
+						<keystore>${basedir}/src/main/jnlp/nl.valori.keystore</keystore>
+						<storepass>valori</storepass>
+						<alias>valori_webstart</alias>
+						<validity>3650</validity>
+						<verify>true</verify>
+						<keystoreConfig>
+							<delete>false</delete>
+							<gen>false</gen>
+						</keystoreConfig>
+					</sign>
+					<outputJarVersions>false</outputJarVersions>
+					<verbose>false</verbose>
+				</configuration>
+			</plugin>
+-->
+		</plugins>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>nl.valori.dashboard</groupId>
+			<artifactId>dashboard-persistency</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.valori.dashboard</groupId>
+			<artifactId>Dashboard_Viewer</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>nl.valori.dashboard</groupId>
+			<artifactId>Dashboard_Libs</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.miginfocom</groupId>
+			<artifactId>miglayout</artifactId>
+			<version>3.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.java.jnlp</groupId>
+			<artifactId>jnlp-servlet</artifactId>
+			<version>5.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- for testing -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>

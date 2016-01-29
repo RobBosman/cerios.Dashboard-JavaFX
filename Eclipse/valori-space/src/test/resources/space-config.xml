@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<space xmlns="http://www.valori.nl/space/v20090922">
+
+	<package-alias name="nl.valori.space.serialize.testdata.race" />
+
+	<serializable-entity class="nl.valori.space.serialize.testdata.race.Race"/>
+
+	<converter class="nl.valori.space.serialize.converters.DateTimeConverter"/>
+
+</space>

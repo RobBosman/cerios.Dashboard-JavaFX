@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<space xmlns="http://www.valori.nl/space/v20090922">
+
+	<package-alias name="nl.valori.dashboard.model" />
+
+<!--
+	<serializable-entity class="nl.valori.dashboard.model.KpiHolder" />
+	<serializable-entity class="nl.valori.dashboard.model.GuiLayout" />
+-->
+
+	<serializable-entity class="java.util.Date" />
+
+	<converter class="nl.valori.space.serialize.converters.DateTimeConverter" />
+</space>

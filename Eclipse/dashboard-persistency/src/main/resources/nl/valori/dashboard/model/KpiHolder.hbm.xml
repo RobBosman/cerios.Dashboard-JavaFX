@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+   <class name='nl.valori.dashboard.model.KpiHolder' table='tb_kpi_holder'>
+      <id name='id' type='long' column='kpi_holder_id'>
+         <generator class='native' />
+      </id>
+      <property name='name' type='string' column='name' />
+      <many-to-one name='guiLayout' class='nl.valori.dashboard.model.GuiLayout' not-null='true' cascade='save-update' foreign-key='fk_kpi_holder_gui_layout_id'>
+         <column name='gui_layout_id'/>
+      </many-to-one>
+      <set name='valueSets' table='tb_kpi_holder_value_set'>
+         <key column='kpi_holder_id' foreign-key='fk_kpi_holder_value_set_key'/>
+         <many-to-many class='nl.valori.dashboard.model.ValueSet' foreign-key='fk_kpi_holder_value_sets' column='value_sets_id' />
+      </set>
+      <set name='children' inverse='true' cascade='all'>
+         <key column='parent_id' foreign-key='fk_kpi_holder_parent_key'/>
+         <one-to-many class='nl.valori.dashboard.model.KpiHolder' />
+      </set>
+      <many-to-one name='parent' class='nl.valori.dashboard.model.KpiHolder' foreign-key='fk_kpi_holder_parent_id'>
+         <column name='parent_id'/>
+      </many-to-one>
+   </class>
+</hibernate-mapping>

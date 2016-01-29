@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://www.valori.nl/dashboard/dataLoader"
+	xmlns:db="http://www.valori.nl/dashboard/dataLoader"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="dashboard">
+		
+        <xsd:complexType>
+			<xsd:sequence>
+
+				<xsd:element name="kpiVariable" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="threshold" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:attribute name="name" type="xsd:string" use="required" />
+									<xsd:attribute name="value" type="xsd:float" use="required" />
+									<xsd:attribute name="fractionOfKpiVariable" type="xsd:string" use="optional" />
+									<xsd:attribute name="relativeToKpiVariable" type="xsd:string" use="optional" />
+									<xsd:attribute name="alertIfBelow" type="xsd:nonNegativeInteger" use="optional" />
+									<xsd:attribute name="alertIfAt" type="xsd:nonNegativeInteger" use="optional" />
+									<xsd:attribute name="alertIfAbove" type="xsd:nonNegativeInteger" use="optional" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" />
+						<xsd:attribute name="accumulated" type="xsd:boolean" use="required" />
+						<xsd:attribute name="weightedAggregation" type="xsd:boolean" use="required" />
+						<xsd:attribute name="interpolated" type="xsd:boolean" use="required" />
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element name="guiLayout" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="property" type="db:Property" minOccurs="0" maxOccurs="unbounded" />
+							<xsd:element name="guiComponent" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="property" type="db:Property" minOccurs="0" maxOccurs="unbounded" />
+										<xsd:element name="guiElement" minOccurs="0" maxOccurs="unbounded">
+											<xsd:complexType>
+												<xsd:sequence>
+													<xsd:element name="property" type="db:Property" minOccurs="0" maxOccurs="unbounded" />
+												</xsd:sequence>
+												<xsd:attribute name="represents" type="xsd:string" use="required" />
+												<xsd:attribute name="kpiVariable" type="xsd:string" use="required" />
+												<xsd:attribute name="label" type="xsd:string" use="required" />
+												<xsd:attribute name="valueFormat" type="xsd:string" use="required" />
+												<xsd:attribute name="unit" type="xsd:string" use="required" />
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="type" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:NMTOKEN">
+												<xsd:enumeration value="BUSINESS_CASE_GRAPH" />
+												<xsd:enumeration value="ADD_SUBTRACT_GRAPH" />
+												<xsd:enumeration value="PROGRESS_BAR" />
+												<xsd:enumeration value="RISKS_VIEW" />
+												<xsd:enumeration value="SPEED_O_METER" />
+												<xsd:enumeration value="SPIDER_GRAPH" />
+												<xsd:enumeration value="TRAFFIC_LIGHT" />
+											</xsd:restriction>
+										</xsd:simpleType>
+									</xsd:attribute>
+									<xsd:attribute name="title" type="xsd:string" use="required" />
+									<xsd:attribute name="layout" type="xsd:string" use="required" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" />
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element name="kpiHolder" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="valueSet" minOccurs="0" maxOccurs="unbounded">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="value" minOccurs="0" maxOccurs="unbounded">
+											<xsd:complexType>
+												<xsd:attribute name="begin" type="xsd:date" />
+												<xsd:attribute name="end" type="xsd:date" />
+												<xsd:attribute name="value" type="xsd:float" />
+											</xsd:complexType>
+										</xsd:element>
+									</xsd:sequence>
+									<xsd:attribute name="kpiVariable" type="xsd:string" use="required" />
+									<xsd:attribute name="weightFactor" type="xsd:float" default="1" />
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:sequence>
+						<xsd:attribute name="name" type="xsd:string" use="required" />
+						<xsd:attribute name="guiLayout" type="xsd:string" use="required" />
+						<xsd:attribute name="parent" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+
+	<xsd:complexType name="Property">
+		<xsd:attribute name="name" type="xsd:string" use="required" />
+		<xsd:attribute name="value" type="xsd:string" use="required" />
+	</xsd:complexType>
+
+</xsd:schema>

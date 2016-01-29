@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="$$codebase" href="$$name">
+    <information>
+        <title>PM Dashboard DEMO</title>
+        <vendor>Valori</vendor>
+        <homepage href="http://www.valori.nl/dashboard/" />
+        <description>Valori project management dashboard DEMO applicatie</description>
+        <icon kind="default" href="images/Valori-icon.gif"/>
+        <icon kind="shortcut" href="images/Valori-icon.gif"/>
+        <icon kind="splash" href="images/Valori-splash-icon.jpg"/>
+        <shortcut online="true">
+            <desktop/>
+            <menu submenu="Valori Dashboard DEMO"/>
+        </shortcut>
+        <update check="always" policy="always"/>
+    </information>
+    <security>
+        <all-permissions/>
+    </security>
+
+    <resources>
+        <j2se version="1.5+"/>
+<!--
+        <property name="log4j.configuration" value="kiklokaal-log4j.properties" />
+-->
+        ## List all BUT the 'native' libs here.
+        #foreach( $entry in $dependencies.split("\n") )
+            #if (!$entry.contains("native_"))
+                $entry
+            #end
+        #end
+    </resources>
+
+    ## The webstart plugin outputs all dependencies as JAR entries and does NOT recognize the NATIVE libraries.
+    ## Workaround solution:
+    ##     1. The following script will identify all the native libraries by the keyword "native_" (in lower case)
+    ##        in the filename.
+    ##     2. It corrects the entry as NATIVELIB.
+    ##
+    ## Note - Replacing JAR into NATIVELIB has been skipped, because this caused problems when using JRE 1.5.
+    #foreach( $entry in $dependencies.split("\n") )
+        #if ($entry.contains("native_linux_x86"))
+            <resources os="Linux" arch="x86">
+                $entry.replace("<jar", '<jar download="eager"')
+            </resources>
+        #end
+        #if ($entry.contains("native_macosx_ppc"))
+            <resources os="MacOSX" arch="ppc">
+                $entry.replace("<jar", '<jar download="eager"')
+            </resources>
+        #end
+        #if ($entry.contains("native_sunos_sparc"))
+            <resources os="SunOS" arch="sparc">
+                $entry.replace("<jar", '<jar download="eager"')
+            </resources>
+        #end
+        #if ($entry.contains("native_windows_x86"))
+            <resources os="Windows" arch="x86">
+                $entry.replace("<jar", '<jar download="eager"')
+            </resources>
+        #end
+    #end
+    <application-desc main-class="$mainClass" />
+</jnlp>

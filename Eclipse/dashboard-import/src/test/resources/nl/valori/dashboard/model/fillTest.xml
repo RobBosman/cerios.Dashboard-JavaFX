@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard xmlns="http://www.valori.nl/dashboard/dataLoader">
+
+	<kpiVariable name="business case" accumulated="false" weightedAggregation="true" interpolated="false" />
+	<kpiVariable name="budget.planned" accumulated="true" weightedAggregation="false" interpolated="true" />
+	<kpiVariable name="budget.spent" accumulated="true" weightedAggregation="false" interpolated="true" />
+	<kpiVariable name="issues" accumulated="true" weightedAggregation="false" interpolated="true" />
+	<guiLayout name="default">
+		<property name="width" value="1020" />
+		<property name="height" value="720" />
+		<guiComponent type="BUSINESS_CASE_GRAPH" layout="" title="Business case">
+			<guiElement represents="PLANNED" kpiVariable="business case" label="Business case" valueFormat="%,.0f"
+				unit="€" />
+		</guiComponent>
+		<guiComponent type="SPEED_O_METER" layout="" title="Budget per week">
+			<guiElement represents="PLANNED" kpiVariable="budget.planned" label="Budget" valueFormat="%,.0f"
+				unit="€" />
+			<guiElement represents="ACTUAL" kpiVariable="budget.spent" label="Spent" valueFormat="%,.0f"
+				unit="€" />
+		</guiComponent>
+		<guiComponent type="PROGRESS_BAR" layout="" title="Budget overall">
+			<guiElement represents="PLANNED" kpiVariable="budget.planned" label="Budget" valueFormat="%,.0f"
+				unit="€" />
+			<guiElement represents="ACTUAL" kpiVariable="budget.spent" label="Spent" valueFormat="%,.0f"
+				unit="€" />
+		</guiComponent>
+	</guiLayout>
+
+	<kpiHolder name="PORTFOLIO" guiLayout="default">
+		<valueSet kpiVariable="budget.planned">
+			<value begin="2009-01-12" end="2009-02-28" value="2000" />
+			<value begin="2009-03-09" end="2009-03-31" value="2500" />
+		</valueSet>
+		<valueSet kpiVariable="budget.spent">
+			<value begin="2009-01-12" end="2009-01-31" value="800" />
+			<value begin="2009-02-01" end="2009-02-28" value="700" />
+			<value begin="2009-03-01" end="2009-03-31" value="900" />
+		</valueSet>
+		<valueSet kpiVariable="business case" weightFactor="1.0">
+			<value begin="2009-01-12" end="2009-02-28" value="1500" />
+			<value begin="2009-03-01" end="2009-03-31" value="1250" />
+		</valueSet>
+		<valueSet kpiVariable="issues">
+			<value begin="2009-01-12" end="2009-01-31" value="2" />
+			<value begin="2009-02-01" end="2009-02-28" value="18" />
+			<value begin="2009-03-01" end="2009-03-31" value="13" />
+		</valueSet>
+	</kpiHolder>
+	<kpiHolder name="PROGRAMME A" parent="PORTFOLIO" guiLayout="default" />
+	<kpiHolder name="PROJECT A1" parent="PROGRAMME A" guiLayout="default" />
+</dashboard>

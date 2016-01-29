@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard xmlns="http://www.valori.nl/dashboard/dataLoader">
+
+	<kpiVariable name="budget.planned" accumulated="false" weightedAggregation="false" interpolated="true" />
+	<kpiVariable name="costs.spent" accumulated="true" weightedAggregation="false" interpolated="true">
+		<!-- Alert '2' if the costs drop below zero. -->
+		<threshold name="A" value="0" alertIfBelow="2" />
+		<!-- Alert '1' if the costs are 20% below the planned budget. -->
+		<threshold name="B" value="0.8" fractionOfKpiVariable="budget.planned" relativeToKpiVariable="budget.planned"
+			alertIfBelow="1" />
+		<!-- Alert '1' if the costs are 10% above the planned budget. -->
+		<threshold name="C" value="1.1" fractionOfKpiVariable="budget.planned" relativeToKpiVariable="budget.planned"
+			alertIfAbove="1" />
+		<!--Alert '1' if the costs are exceed 75% of the total budget. -->
+		<threshold name="D" value="0.75" fractionOfKpiVariable="budget.planned" alertIfBelow="1" />
+	</kpiVariable>
+
+	<guiLayout name="default">
+		<property name="width" value="900" />
+		<property name="height" value="720" />
+		<guiComponent type="PROGRESS_BAR" title="Finance overall" layout="xywh: 30 10 200 300">
+			<guiElement represents="PLANNED" kpiVariable="budget.planned" label="Budget" valueFormat="%,.0f"
+				unit="hours">
+				<property name="displayOrder" value="0" />
+			</guiElement>
+			<guiElement represents="ACTUAL" kpiVariable="costs.spent" label="Costs" valueFormat="%,.0f"
+				unit="€">
+				<property name="displayOrder" value="1" />
+			</guiElement>
+		</guiComponent>
+	</guiLayout>
+
+	<kpiHolder name="PORTFOLIO" guiLayout="default" />
+
+	<kpiHolder name="PROGRAMME A" guiLayout="default" parent="PORTFOLIO" />
+
+	<kpiHolder name="PROJECT A1" guiLayout="default" parent="PROGRAMME A">
+		<valueSet kpiVariable="budget.planned" weightFactor="1.0">
+			<value begin="2009-01-01" end="2009-12-31" value="1200" />
+			<value begin="2009-09-01" end="2009-12-31" value="400" />
+		</valueSet>
+		<valueSet kpiVariable="costs.spent" weightFactor="1.0">
+			<value begin="2009-01-01" end="2009-01-31" value="100" />
+			<value begin="2009-02-01" end="2009-02-28" value="120" />
+			<value begin="2009-03-01" end="2009-03-31" value="110" />
+			<value begin="2009-04-01" end="2009-04-30" value="100" />
+			<value begin="2009-05-01" end="2009-05-31" value="110" />
+			<value begin="2009-06-01" end="2009-06-30" value="90" />
+			<value begin="2009-07-01" end="2009-07-31" value="120" />
+			<value begin="2009-08-01" end="2009-08-31" value="120" />
+			<value begin="2009-09-01" end="2009-09-30" value="110" />
+			<value begin="2009-10-01" end="2009-10-31" value="130" />
+			<value begin="2009-11-01" end="2009-11-30" value="130" />
+			<value begin="2009-12-01" end="2009-12-31" value="140" />
+		</valueSet>
+	</kpiHolder>
+</dashboard>

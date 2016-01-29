@@ -1,0 +1,127 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Dashboard root</name>
+	<groupId>nl.valori</groupId>
+	<artifactId>valori-root</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>valori-space</module>
+		<module>dashboard-model</module>
+		<module>dashboard-persistency</module>
+<!--
+		<module>dashboard-webstart</module>
+-->
+		<module>dashboard-server</module>
+		<module>dashboard-import</module>
+	</modules>
+
+	<dependencies>
+		<!-- Provided libs -->
+		<!--
+			<dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId>
+			<version>1.2.14</version> <scope>provided</scope> </dependency>
+		-->
+		<!-- Libs for testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Enforce Java 1.5 or higher -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<!-- Copy resources platform-independently -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- Don't add Maven stuff to deployables -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>false</addMavenDescriptor>
+					</archive>
+				</configuration>
+			</plugin>
+			<!-- Let Maven generate Eclipse artifacts properly -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<projectNameTemplate>[artifactId]</projectNameTemplate>
+					<!-- #### Don't forget to specify ${wtpContextName} #### -->
+					<wtpContextName>${wtpContextName}</wtpContextName>
+					<wtpmanifest>true</wtpmanifest>
+					<wtpapplicationxml>true</wtpapplicationxml>
+					<wtpversion>2.0</wtpversion>
+					<manifest>${basedir}/src/main/resources/META-INF/MANIFEST.MF</manifest>
+					<buildOutputDirectory>${basedir}/target/classes</buildOutputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!--
+	<distributionManagement>
+		<repository>
+			<id>maven-repo</id>
+			<url>file:///C:/Home/Rob/Documenten/Werk/Dashboard/dashboard/IDE/Maven/maven-repo</url>
+		</repository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>maven-repo</id>
+			<url>file:///C:/Home/Rob/Documenten/Werk/Dashboard/dashboard/IDE/Maven/maven-repo</url>
+		</repository>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+		</repository>
+	</repositories>
+	-->
+
+	<repositories>
+		<repository>
+			<id>repo-additional</id>
+			<url>file:../Maven/repo-additional</url>
+		</repository>
+	</repositories>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>repo-additional</id>
+			<url>file:../Maven/repo-additional</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<xsd:schema
+	targetNamespace="http://www.valori.nl/space/v20090922"
+	xmlns:space="http://www.valori.nl/space/v20090922"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="space">
+        <xsd:complexType>
+			<xsd:sequence>
+
+				<xsd:element name="package-alias" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="name" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element name="serializable-entity" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="class" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element name="converter" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="class" type="xsd:string" />
+					</xsd:complexType>
+				</xsd:element>
+
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+
+</xsd:schema>

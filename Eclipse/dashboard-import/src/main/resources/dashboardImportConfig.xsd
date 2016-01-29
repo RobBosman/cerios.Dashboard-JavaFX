@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+	targetNamespace="http://www.valori.nl/dashboard/import"
+	xmlns:dbi="http://www.valori.nl/dashboard/import"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="dashboardImport">
+		
+        <xsd:complexType>
+			<xsd:sequence>
+
+				<xsd:element name="clearDatabase" minOccurs="0" maxOccurs="unbounded" />
+
+				<xsd:element name="loadData" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:attribute name="fileName" type="xsd:string" use="required" />
+						<xsd:attribute name="remark" type="xsd:string" use="optional" />
+					</xsd:complexType>
+				</xsd:element>
+
+				<xsd:element name="excel" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="kpiHolderHierarchy" type="dbi:Entity" minOccurs="0" maxOccurs="unbounded" />
+							<xsd:element name="kpiVariable" type="dbi:Entity" minOccurs="0" maxOccurs="unbounded" />
+						</xsd:sequence>
+						<xsd:attribute name="fileName" type="xsd:string" use="required" />
+						<xsd:attribute name="sheetName" type="xsd:string" use="required" />
+						<xsd:attribute name="firstRow" type="xsd:nonNegativeInteger" use="required" />
+						<xsd:attribute name="lastRow" type="xsd:nonNegativeInteger" use="required" />
+					</xsd:complexType>
+				</xsd:element>
+	
+			</xsd:sequence>
+		</xsd:complexType>
+    </xsd:element>
+
+	<xsd:complexType name="Entity">
+		<xsd:sequence>
+			<xsd:element name="kpiHolderName" type="dbi:CellLocation" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="kpiHolderParentName" type="dbi:CellLocation" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="beginDate" type="dbi:CellLocation" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="endDate" type="dbi:CellLocation" minOccurs="0" maxOccurs="unbounded" />
+			<xsd:element name="period" minOccurs="0" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:attribute name="column" type="xsd:string" use="required" />
+					<xsd:attribute name="separator" type="xsd:string" use="optional" />
+					<xsd:attribute name="year" type="xsd:nonNegativeInteger" use="optional" />
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="value" type="dbi:CellLocation" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+	<xsd:complexType name="CellLocation">
+		<xsd:attribute name="column" type="xsd:string" use="required" />
+		<xsd:attribute name="separator" type="xsd:string" use="optional" />
+	</xsd:complexType>
+
+</xsd:schema>
